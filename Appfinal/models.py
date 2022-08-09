@@ -1,9 +1,9 @@
 from django.db import models
 
 # Create your models here.
-class cliente(models.Model):
+class Cliente(models.Model):
     nombre = models.CharField(max_length=40)
-    cant_transacciones = models.IntegerField() 
+    email = models.EmailField()
 
 class empleado(models.Model):
     nombre = models.CharField(max_length=40)
