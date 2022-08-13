@@ -45,6 +45,9 @@ def info_formulario(request):
     else:
         return render(request, 'Appfinal/formulario.html')
 
+
+clientes_lista = dir(Cliente)
+
 def buscarcliente(request):
 
     return render(request, 'Appfinal/busqueda_cliente.html')
@@ -52,4 +55,7 @@ def buscarcliente(request):
 def buscar(request):
 
     respuesta = request.GET.get("nombre")
-    return HttpResponse(respuesta)
+
+    respuesta_lista = Cliente.objects.filter(nombre__icontains = respuesta)
+
+    return render(request, 'Appfinal/busqueda_finalizada.html', {"nombre": respuesta_lista})
