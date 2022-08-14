@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de prueba</title>
+</head>
+<body>
+
+    <form  method="post"> {% csrf_token %}
+        <p>
+            Ingresa el nombre del producto
+            <input type="text" name="nombre_producto">
+        </p>
+        
+        <p>
+            Ingresa el precio
+            <input type="number" name="precio">
+        </p>
+        <p>
+            Hay stock?
+            <input type="number" name="stock">
+        </p>
+        <p>
+            <input type="submit" value="Enviar!">
+        </p>
+    </form>
+    
+</body>
+</html>

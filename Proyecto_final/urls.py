@@ -19,7 +19,6 @@ from Proyecto_final.views import dia, plantilla
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('principal', plantilla),
     path('Appfinal/', include('Appfinal.urls'))
     
 ]

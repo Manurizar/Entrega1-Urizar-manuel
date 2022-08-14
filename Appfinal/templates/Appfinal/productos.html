@@ -1,0 +1,11 @@
+{% extends "Appfinal/padre.html" %}
+
+{% load static %}
+
+{% block B %}
+
+    {% for p in lista %}
+        <p>{{p}} <a href="{% url 'eliminarProducto' p.nombre_producto %}">Borrar</a> </p>
+    {% endfor %}
+    <a href ='/Appfinal/formulario_producto/'> Toca aca para agregar otro producto! </a>
+{% endblock %}
