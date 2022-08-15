@@ -19,10 +19,7 @@ class producto(models.Model):
     def __str__(self):
         return f"Nombre del producto: {self.nombre_producto} - Precio: ${self.precio} - Stock disponible: {self.stock}"
     
-    def lista_productos(request):
-        lista = producto.objects.all()
-        contexto = {"lista":lista}
-        return render(request, 'Appfinal/productos.html', contexto)
+    
 
 class local(models.Model):
     calle = models.CharField(max_length=40)

@@ -1,0 +1,20 @@
+{% extends "Appfinal/padre.html" %}
+
+{% load static %}
+
+{% block B %}
+
+    <h1> Clientes </h1>
+    {% for a in object_list %}
+        <p>
+            {{a.id}}
+            {{a.nombre_cliente}} 
+
+            <a href="{% url 'clienteEliminar' a.id %}">Borrar</a>
+            <a href="{% url 'clienteModificar' a.id %}">Modificar</a>
+            <a href="{% url 'clienteDetalle' a.id %}">Perfil</a>
+        </p>
+        
+    {% endfor %}
+    <a href ="/Appfinal/crear_cliente/"> Toca aca para agregarte como cliente </a>
+{% endblock %}
