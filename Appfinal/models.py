@@ -11,15 +11,14 @@ class empleado(models.Model):
     nombre_empleado = models.CharField(max_length=40)
     email = models.EmailField()
     puesto = models.CharField(max_length=40)
-
+    def __str__(self):
+        return f"Nombre del empleado: {self.nombre_empleado} - email: ${self.email} - puesto: {self.puesto}"
 class producto(models.Model):
     nombre_producto = models.CharField(max_length=40)
     precio = models.IntegerField() 
     stock = models.IntegerField() 
     def __str__(self):
         return f"Nombre del producto: {self.nombre_producto} - Precio: ${self.precio} - Stock disponible: {self.stock}"
-    
-    
 
 class local(models.Model):
     calle = models.CharField(max_length=40)

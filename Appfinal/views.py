@@ -6,9 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 
 # Create your views here.
-def cliente(request):
-
-    return render(request, 'Appfinal/cliente.html')
+clientes_lista = dir(Cliente)
 
 def local(request):
 
@@ -18,56 +16,7 @@ def transaccion(request):
 
     return render(request, 'Appfinal/transaccion.html')
 
-def formulario(request):
-
-    return render(request, 'Appfinal/formulario.html')
-
-def formulario_cliente(request):
-
-    if request.method == "POST":
-
-        mi_formulario = Formulario_clientes(request.POST)
-        
-        print(mi_formulario)
-        
-        if mi_formulario.is_valid:
-            
-            informacion = mi_formulario.cleaned_data
-            
-            cliente_3 = Cliente(nombre_cliente=informacion["nombre"], email=informacion["email"])
-            
-            cliente_3.save()
-            
-            return render(request, 'Appfinal/formulario_cliente_cargado.html')
-    
-    else:
-        return render(request, 'Appfinal/formulario_cliente.html')
-
-def formulario_producto(request):
-
-    if request.method == "POST":
-
-        mi_formulario = Formulario_producto(request.POST)
-        
-        print(mi_formulario)
-        
-        if mi_formulario.is_valid:
-            
-            informacion = mi_formulario.cleaned_data
-            
-            producto_a_crear = producto(nombre_producto=informacion["nombre_producto"], precio=informacion["precio"], stock=informacion["stock"])
-            
-            producto_a_crear.save()
-            
-            return render(request, 'Appfinal/formulario_producto_cargado.html')
-    
-    else:
-
-        formularioProducto = Formulario_producto()
-
-    return render(request, 'Appfinal/formulario_producto.html', {"formularioProducto":formularioProducto})
-
-clientes_lista = dir(Cliente)
+#MOTOR BUSQUEDA CLIENTE
 
 def buscarcliente(request):
 
@@ -82,54 +31,9 @@ def buscar(request):
 
     return render(request, 'Appfinal/busqueda_finalizada.html', {"nombre": respuesta_lista})
 
-def lista_productos(request):
-        lista = producto.objects.all()
-        contexto = {"lista":lista}
-        return render(request, 'Appfinal/productos.html', contexto)
+#HAY QUE UNIR MOTOR Y CRUD DE CLIENTE
 
-def eliminarProductos(request, id_producto):
-
-    try:
-        producto_a_buscar = producto.objects.get(nombre_producto=id_producto)
-
-        producto_a_buscar.delete()
-
-        lista = producto.objects.all()
-        
-        contexto = {"lista":lista}
-        
-        return render(request, 'Appfinal/productos.html', contexto)
-    except:
-        return HttpResponse("Este producto no existe")
-
-def modificarProducto(request, id_producto):
-    
-    if request.method == "GET":
-
-        formulario = Formulario_producto()
-        
-        return render(request, 'Appfinal/actualizar_productos.html', {"formulario":formulario})
-
-    else:
-
-        formulario = Formulario_producto(request.POST)
-
-        if formulario.is_valid():
-
-            data = formulario.cleaned_data
-
-            producto_a_modificar = producto.objects.get(nombre_producto=id_producto)
-
-            producto_a_modificar.nombre_producto = data["nombre_producto"]
-
-            producto_a_modificar.precio = data["precio"]
-
-            producto_a_modificar.stock = data["stock"]
-
-            producto_a_modificar.save()
-
-            return render(request, 'Appfinal/formulario_producto_cargado.html') 
-            
+#CRUD EMPLEADO            
 
 class Lista_empleados(ListView):
     model = empleado
@@ -141,7 +45,7 @@ class Detalle_empleado(DetailView):
 
 class Crear_empleado(CreateView):
     model = empleado
-    success_url = 'empleado_lista'
+    success_url = '/Appfinal/empleado'
     fields = ['nombre_empleado', 'email', 'puesto']
 
 class Modificar_empleado(UpdateView):
@@ -152,6 +56,8 @@ class Modificar_empleado(UpdateView):
 class Eliminar_empleado(DeleteView):
     model = empleado
     success_url = '/Appfinal/empleado'
+
+#CRUD CLIENTE
     
 class Lista_clientes(ListView):
     model = Cliente
@@ -174,3 +80,31 @@ class Modificar_cliente(UpdateView):
 class Eliminar_cliente(DeleteView):
     model = Cliente
     success_url = '/Appfinal/cliente_prueba'
+
+#CRUD PRODUCTO
+
+class Lista_productos(ListView):
+    model = producto
+    template_name = 'Appfinal/producto_lista.html'
+
+class Detalle_producto(DetailView):
+    model = producto
+    template_name = 'Appfinal/producto_detalle.html'
+
+class Crear_producto(CreateView):
+    model = producto
+    success_url = '/Appfinal/producto'
+    fields = ['nombre_producto', 'precio', 'stock']
+
+class Modificar_producto(UpdateView):
+    model = producto
+    success_url = '/Appfinal/producto'
+    fields = ['nombre_producto', 'precio', 'stock']
+
+class Eliminar_producto(DeleteView):
+    model = producto
+    success_url = '/Appfinal/producto'
+
+#CRUD TRANSACCION
+
+#CRUD LOCAL

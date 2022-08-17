@@ -10,6 +10,7 @@
     <form method="post"> {% csrf_token %}
         Queres borrar a este cliente?
         <input type="submit" value="Borrar"/>
+        <a href="{% url 'clienteInicio'  %}">Cancelar</a>
     </form>
 </body>
 </html>

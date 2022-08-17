@@ -1,0 +1,9 @@
+{% extends "Appfinal/padre.html" %}
+
+{% load static %}
+
+{% block B %}
+
+    <h1> {{producto.nombre_producto}}</h1>
+    <a href="{% url 'productoInicio'  %}">Inicio</a>
+{% endblock %}
