@@ -4,9 +4,15 @@ from Appfinal.forms import *
 from Appfinal.models import *
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin  
 
 # Create your views here.
 clientes_lista = dir(Cliente)
+
+def inicio(request):
+    return render(request, 'Appfinal/inicio_no_logueado.html')
 
 def local(request):
 
@@ -35,49 +41,49 @@ def buscar(request):
 
 #CRUD EMPLEADO            
 
-class Lista_empleados(ListView):
+class Lista_empleados(LoginRequiredMixin, ListView):
     model = empleado
     template_name = 'Appfinal/empleado_lista.html'
 
-class Detalle_empleado(DetailView):
+class Detalle_empleado(LoginRequiredMixin, DetailView):
     model = empleado
     template_name = 'Appfinal/empleado_detalle.html'
 
-class Crear_empleado(CreateView):
+class Crear_empleado(LoginRequiredMixin, CreateView):
     model = empleado
     success_url = '/Appfinal/empleado'
     fields = ['nombre_empleado', 'email', 'puesto']
 
-class Modificar_empleado(UpdateView):
+class Modificar_empleado(LoginRequiredMixin, UpdateView):
     model = empleado
     success_url = '/Appfinal/empleado_lista'
     fields = ['nombre_empleado', 'email', 'puesto']
 
-class Eliminar_empleado(DeleteView):
+class Eliminar_empleado(LoginRequiredMixin, DeleteView):
     model = empleado
     success_url = '/Appfinal/empleado'
 
 #CRUD CLIENTE
     
-class Lista_clientes(ListView):
+class Lista_clientes(LoginRequiredMixin, ListView):
     model = Cliente
     template_name = 'Appfinal/cliente_lista.html'
 
-class Detalle_cliente(DetailView):
+class Detalle_cliente(LoginRequiredMixin, DetailView):
     model = Cliente
     template_name = 'Appfinal/cliente_detalle.html'
 
-class Crear_cliente(CreateView):
+class Crear_cliente(LoginRequiredMixin, CreateView):
     model = Cliente
     success_url = '/Appfinal/cliente_prueba'
     fields = ['nombre_cliente', 'email']
 
-class Modificar_cliente(UpdateView):
+class Modificar_cliente(LoginRequiredMixin, UpdateView):
     model = Cliente
     success_url = '/Appfinal/cliente_prueba'
     fields = ['nombre_cliente', 'email']
 
-class Eliminar_cliente(DeleteView):
+class Eliminar_cliente(LoginRequiredMixin,  DeleteView):
     model = Cliente
     success_url = '/Appfinal/cliente_prueba'
 
@@ -108,3 +114,48 @@ class Eliminar_producto(DeleteView):
 #CRUD TRANSACCION
 
 #CRUD LOCAL
+
+#LOGIN
+
+def login_request(request):
+
+    if request.method == "POST":
+
+        form = AuthenticationForm(request, data = request.POST)
+
+        if form.is_valid():
+
+            usuario = form.cleaned_data.get("username")
+
+            contraseña = form.cleaned_data.get("password")
+
+            user = authenticate(username=usuario, password=contraseña)
+
+            if user is not None:
+
+                login(request, user)
+
+                return render(request, "Appfinal/inicio_logueado.html", {"mensaje":f"Bienvenido {usuario}"})
+
+            else:
+
+                return render(request, "Appfinal/inicio_no_logueado.html", {"mensaje":"Datos incorrectos"})
+
+        else:
+
+            return render(request, "Appfinal/producto_lista.html", {"mensaje":"Error de formulario"})
+
+    form = AuthenticationForm()
+    
+    return render(request, 'Appfinal/login.html', {'form':form})
+
+def registro(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            form.save()
+            return render(request, "Appfinal/producto_lista.html", {"mensaje":"Usuario creado!"})
+    else:
+        form = UserRegisterForm()
+    return render(request, 'Appfinal/registro.html', {'form':form})
