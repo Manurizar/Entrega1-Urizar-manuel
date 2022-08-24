@@ -1,0 +1,16 @@
+{% extends "Appfinal/template_logueado.html" %}
+
+{% load static %}
+
+{% block B %}
+
+    <h1> Productos </h1>
+    {% for a in object_list %}
+        <p>
+            {{a.nombre_producto}}
+            {{a.precio}}
+            <a href="{% url 'productoDetalle' a.id %}">Detalle</a>
+        </p>
+    {% endfor %}
+    
+{% endblock %}

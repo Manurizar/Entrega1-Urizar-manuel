@@ -12,11 +12,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 clientes_lista = dir(Cliente)
 
 def inicio(request):
-    return render(request, 'Appfinal/inicio_no_logueado.html')
+    return render(request, 'Appfinal/inicio_logueado.html')
 
 def local(request):
-
-    return render(request, 'Appfinal/local.html')
+    a = dir(User)
+    
+    return render(request, 'Appfinal/local.html', {"a": a})
 
 def transaccion(request):
 
@@ -89,6 +90,10 @@ class Eliminar_cliente(LoginRequiredMixin,  DeleteView):
 
 #CRUD PRODUCTO
 
+class Lista_producto_no_logueado(ListView):
+    model = producto
+    template_name = 'Appfinal/producto_lista_no_logueado.html'
+
 class Lista_productos(ListView):
     model = producto
     template_name = 'Appfinal/producto_lista.html'
@@ -139,11 +144,11 @@ def login_request(request):
 
             else:
 
-                return render(request, "Appfinal/inicio_no_logueado.html", {"mensaje":"Datos incorrectos"})
+                return render(request, "Appfinal/inicio_logueado.html", {"mensaje":"Datos incorrectos"})
 
         else:
 
-            return render(request, "Appfinal/producto_lista.html", {"mensaje":"Error de formulario"})
+            return render(request, "Appfinal/inicio_logueado.html", {"mensaje":"Error de formulario"})
 
     form = AuthenticationForm()
     
@@ -159,3 +164,30 @@ def registro(request):
     else:
         form = UserRegisterForm()
     return render(request, 'Appfinal/registro.html', {'form':form})
+
+#CRUD USUARIOS
+
+class Lista_usuarios(LoginRequiredMixin, ListView):
+    model = User
+    template_name = 'Appfinal/usuario_lista.html'
+
+class Detalle_usuarios(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'Appfinal/usuario_detalle.html'
+
+class Crear_usuario(LoginRequiredMixin, CreateView):
+    model = User
+    template_name = 'Appfinal/user_form.html'
+    success_url = '/Appfinal/usuarios/'
+    fields = ['username', 'email', 'password', 'first_name', 'last_name']
+
+class Modificar_usuario(LoginRequiredMixin, UpdateView):
+    model = User
+    template_name = 'Appfinal/user_form.html'
+    success_url = '/Appfinal/usuarios/'
+    fields = ['username', 'email', 'first_name', 'last_name']
+
+class Eliminar_usuario(LoginRequiredMixin,  DeleteView):
+     model = User
+     template_name = 'Appfinal/user_confirm_delete.html'
+     success_url = '/Appfinal/usuarios/'

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Cliente(models.Model):
@@ -29,3 +30,7 @@ class transaccion(models.Model):
     N_de_transaccion = models.IntegerField() 
     fecha_transaccion = models.DateField()
     valor = models.IntegerField() 
+
+class Avatar(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to='avatares', null=True, blank=True)

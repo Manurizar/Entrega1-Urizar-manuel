@@ -4,6 +4,7 @@
 
 {% block B %}
 
-    <h1> {{producto.nombre_producto}}</h1>
-    <a href="{% url 'productoInicio'  %}">Inicio</a>
+    <h1> {{user.username}} </h1>
+    <a href="{% url 'usuarioInicio'  %}">Inicio</a>
+
 {% endblock %}

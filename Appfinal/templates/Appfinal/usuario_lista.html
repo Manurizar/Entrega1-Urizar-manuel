@@ -1,0 +1,22 @@
+{% extends "Appfinal/template_logueado.html" %}
+
+{% load static %}
+
+{% block B %}
+
+    <h1> Usuarios </h1>
+    {% for a in object_list %}
+        <p>
+            {{a.id}}
+            {{a.username}} 
+
+            <a href="{% url 'usuarioEliminar' a.id %}">Borrar</a>
+            <a href="{% url 'usuarioModificar' a.id %}">Modificar</a>
+            <a href="{% url 'usuarioDetalle' a.id %}">Detalle</a>
+        </p>
+        
+    {% endfor %}
+    <p>
+        <a href ="/Appfinal/crear_usuario/"> Agregar usuario </a>
+    </p>   
+{% endblock %}

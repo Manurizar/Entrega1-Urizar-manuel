@@ -1,4 +1,4 @@
-{% extends "Appfinal/template_no_logueado.html" %}
+{% extends "Appfinal/template_logueado.html" %}
 
 {% load static %}
 
@@ -7,8 +7,8 @@
     <h1> Productos </h1>
     {% for a in object_list %}
         <p>
-            {{a.id}}
-            {{a.nombre_producto}}
+            ID: {{a.id}}
+            Nombre: {{a.nombre_producto}}
         
             <a href="{% url 'productoEliminar' a.id %}">Borrar</a>
             <a href="{% url 'productoModificar' a.id %}">Modificar</a>

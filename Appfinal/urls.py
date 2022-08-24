@@ -1,6 +1,8 @@
 from django.urls import path
 from Appfinal import views
 from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
  
 
 urlpatterns = [
@@ -21,6 +23,7 @@ urlpatterns = [
     path('modificar_empleado/<pk>', views.Modificar_empleado.as_view(), name="empleadoModificar"),
     path('eliminar_empleado/<pk>', views.Eliminar_empleado.as_view(), name="empleadoEliminar"),
 
+    path('productoInicio/', views.Lista_producto_no_logueado.as_view(), name="productos_no_logueado"), 
     path('producto/', views.Lista_productos.as_view(), name="productoInicio"),
     path('detalle_producto/<pk>', views.Detalle_producto.as_view(), name="productoDetalle"),
     path('crear_producto/', views.Crear_producto.as_view(), name="productoCrear"),
@@ -35,4 +38,12 @@ urlpatterns = [
     path('registrarse/', views.registro, name="registro"),
     path('logout/', LogoutView.as_view(template_name='Appfinal/logout.html'), name = 'Logout'),
 
+    path('usuarios/', views.Lista_usuarios.as_view(), name="usuarioInicio"),
+    path('detalle_usuario/<pk>', views.Detalle_usuarios.as_view(), name="usuarioDetalle"),
+    path('crear_usuario/', views.Crear_usuario.as_view(), name="usuarioCrear"),
+    path('modificar_usuario/<pk>', views.Modificar_usuario.as_view(), name="usuarioModificar"),
+    path('eliminar_usuario/<pk>', views.Eliminar_usuario.as_view(), name="usuarioEliminar"),
+
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
