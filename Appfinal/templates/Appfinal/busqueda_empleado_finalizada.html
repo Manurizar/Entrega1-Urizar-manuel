@@ -8,11 +8,12 @@
 </head>
 <body>
     <h1> 
-        Tu busqueda devolvio estos resultados!
-         {% for clientes in nombre %}
-             <p> {{clientes.email}} </p>
+        Tu busqueda devolvio estos resultados! <br>
+        <br>
+         {% for empleado in nombre %}
+             <a href="/Appfinal/detalle_empleado/{{empleado.id}}">{{empleado.nombre_empleado}} </a>
          {% endfor %}     
     </h1>
-    <a href="{% url 'clienteInicio'  %}">Inicio</a>
+    <a href="{% url 'empleadoInicio'  %}">Inicio</a>
 </body>
 </html>

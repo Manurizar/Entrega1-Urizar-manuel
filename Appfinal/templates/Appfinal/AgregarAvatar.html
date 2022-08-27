@@ -1,0 +1,15 @@
+{% extends "Appfinal/template_logueado.html" %}
+
+{% load static %}
+
+{% block B %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{mi_formulario.as_p}}
+    
+    <input type="submit" value="Aceptar">
+
+</form>
+    
+{% endblock %}

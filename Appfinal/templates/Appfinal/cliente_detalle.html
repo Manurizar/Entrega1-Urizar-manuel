@@ -5,6 +5,10 @@
 {% block B %}
 
     <h1> {{cliente.nombre_cliente}}</h1>
+    <p>
+        Email: {{cliente.email}} <br>
+        Fecha de inicio: {{cliente.fecha_de_creacion}}
+    </p>
     <a href="{% url 'clienteInicio'  %}">Inicio</a>
 
 {% endblock %}

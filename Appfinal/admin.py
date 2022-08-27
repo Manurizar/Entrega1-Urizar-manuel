@@ -4,7 +4,5 @@ from .models import *
 
 admin.site.register(Cliente)
 admin.site.register(empleado)
-admin.site.register(local)
-admin.site.register(transaccion)
 admin.site.register(producto)
 admin.site.register(Avatar)

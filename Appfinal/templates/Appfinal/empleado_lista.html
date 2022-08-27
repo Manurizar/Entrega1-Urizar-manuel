@@ -7,8 +7,8 @@
     <h1> Empleados </h1>
     {% for a in object_list %}
         <p>
-            {{a.id}}
-            {{a.nombre_empleado}}
+            Puesto numero: {{a.id}} <br>
+            Nombre: {{a.nombre_empleado}} <br> 
             <a href="{% url 'empleadoEliminar' a.id %}">Borrar</a>
             <a href="{% url 'empleadoModificar' a.id %}">Modificar</a>
             <a href="{% url 'empleadoDetalle' a.id %}">Ficha</a>
@@ -17,4 +17,5 @@
     <p>
         <a href ="/Appfinal/crear_empleado/"> Agregar empleado </a>
     </p>
+        <a href ="/Appfinal/busqueda_Empleado/"> Buscar un empleado </a>
 {% endblock %}

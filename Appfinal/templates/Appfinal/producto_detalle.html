@@ -5,5 +5,11 @@
 {% block B %}
 
     <h1> {{producto.nombre_producto}}</h1>
+    <p>
+        Precio: {{producto.precio}} <br>
+        Stock: {{producto.stock}} <br>
+        Fecha de creacion: {{producto.fecha_de_creacion}} 
+    </p>
     <a href="{% url 'productoInicio'  %}">Inicio</a>
+
 {% endblock %}

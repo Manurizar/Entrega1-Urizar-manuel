@@ -7,8 +7,9 @@
     <h1> Productos </h1>
     {% for a in object_list %}
         <p>
-            {{a.nombre_producto}}
-            {{a.precio}}
+            Nombre: {{a.nombre_producto}} <br>
+            Precio: {{a.precio}} <br>
+            Fecha de creacion: {{a.fecha_de_creacion}} <br>
             <a href="{% url 'productoDetalle' a.id %}">Detalle</a>
         </p>
     {% endfor %}

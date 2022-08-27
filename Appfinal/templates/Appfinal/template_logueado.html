@@ -23,11 +23,11 @@
                 {% if request.user.is_authenticated %}
                 <a class="navbar-brand" href="/Appfinal/cliente/">Clientes</a>
                 <a class="navbar-brand" href="/Appfinal/empleado/">Empleados</a>
-                <a class="navbar-brand" href="/Appfinal/transaccion/">Transacciones</a>
                 <a class="navbar-brand" href="/Appfinal/local/">Local</a>
                 <a class="navbar-brand" href="/Appfinal/producto/">Productos</a>
                 <a class="navbar-brand" href="/Appfinal/inicio/">Inicio</a>
                 <a class="navbar-brand" href="/Appfinal/logout/">Cerrar sesion</a>
+                <img height = "40px" src="{{url}}">
                 {% endif %}
                 {% if not request.user.is_authenticated %}
                 <a class="navbar-brand" href="/Appfinal/local/">Local</a>

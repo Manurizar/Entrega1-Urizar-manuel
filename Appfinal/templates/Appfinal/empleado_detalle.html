@@ -5,5 +5,10 @@
 {% block B %}
 
     <h1> {{empleado.nombre_empleado}}</h1>
+    <p>
+        Email: {{empleado.email}} <br>
+        Puesto: {{empleado.puesto}} <br>
+        Fecha de inicio: {{empleado.fecha_de_contratacion}}
+    </p>
     <a href="{% url 'empleadoInicio'  %}">Inicio</a>
 {% endblock %}

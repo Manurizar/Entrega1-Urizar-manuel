@@ -7,38 +7,66 @@ from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin  
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 # Create your views here.
 clientes_lista = dir(Cliente)
 
+#VISTAS SIMPLES
+
 def inicio(request):
-    return render(request, 'Appfinal/inicio_logueado.html')
+    if request.user.is_authenticated:
+        avatar = Avatar.objects.filter(user=request.user).first()
+        return render(request, 'Appfinal/inicio_logueado.html', {"url":avatar.imagen.url})
+    else:
+        return render(request, 'Appfinal/inicio_logueado.html')
 
 def local(request):
-    a = dir(User)
     
-    return render(request, 'Appfinal/local.html', {"a": a})
+    
+    return render(request, 'Appfinal/local.html')
 
-def transaccion(request):
+#MOTORES BUSQUEDA
 
-    return render(request, 'Appfinal/transaccion.html')
-
-#MOTOR BUSQUEDA CLIENTE
-
-def buscarcliente(request):
+def buscarCliente(request):
 
     return render(request, 'Appfinal/busqueda_cliente.html')
 
-def buscar(request):
+def buscarClienteResultado(request):
 
 
     respuesta = request.GET.get("nombre")
 
     respuesta_lista = Cliente.objects.filter(nombre_cliente__icontains = respuesta)
 
-    return render(request, 'Appfinal/busqueda_finalizada.html', {"nombre": respuesta_lista})
+    return render(request, 'Appfinal/busqueda_cliente_finalizada.html', {"nombre": respuesta_lista})
 
-#HAY QUE UNIR MOTOR Y CRUD DE CLIENTE
+def buscarProducto(request):
+
+    return render(request, 'Appfinal/busqueda_producto.html')
+
+def buscarProductoResultado(request):
+
+
+    respuesta = request.GET.get("nombre")
+
+    respuesta_lista = producto.objects.filter(nombre_producto__icontains = respuesta)
+
+    return render(request, 'Appfinal/busqueda_producto_finalizada.html', {"nombre": respuesta_lista})
+
+def buscarEmpleado(request):
+
+    return render(request, 'Appfinal/busqueda_empleado.html')
+
+def buscarEmpleadoResultado(request):
+
+
+    respuesta = request.GET.get("nombre")
+
+    respuesta_lista = empleado.objects.filter(nombre_empleado__icontains = respuesta)
+
+    return render(request, 'Appfinal/busqueda_empleado_finalizada.html', {"nombre": respuesta_lista})
 
 #CRUD EMPLEADO            
 
@@ -57,7 +85,7 @@ class Crear_empleado(LoginRequiredMixin, CreateView):
 
 class Modificar_empleado(LoginRequiredMixin, UpdateView):
     model = empleado
-    success_url = '/Appfinal/empleado_lista'
+    success_url = '/Appfinal/empleado/'
     fields = ['nombre_empleado', 'email', 'puesto']
 
 class Eliminar_empleado(LoginRequiredMixin, DeleteView):
@@ -76,17 +104,17 @@ class Detalle_cliente(LoginRequiredMixin, DetailView):
 
 class Crear_cliente(LoginRequiredMixin, CreateView):
     model = Cliente
-    success_url = '/Appfinal/cliente_prueba'
+    success_url = '/Appfinal/cliente/'
     fields = ['nombre_cliente', 'email']
 
 class Modificar_cliente(LoginRequiredMixin, UpdateView):
     model = Cliente
-    success_url = '/Appfinal/cliente_prueba'
+    success_url = '/Appfinal/cliente/'
     fields = ['nombre_cliente', 'email']
 
 class Eliminar_cliente(LoginRequiredMixin,  DeleteView):
     model = Cliente
-    success_url = '/Appfinal/cliente_prueba'
+    success_url = '/Appfinal/cliente/'
 
 #CRUD PRODUCTO
 
@@ -116,9 +144,6 @@ class Eliminar_producto(DeleteView):
     model = producto
     success_url = '/Appfinal/producto'
 
-#CRUD TRANSACCION
-
-#CRUD LOCAL
 
 #LOGIN
 
@@ -174,7 +199,7 @@ class Lista_usuarios(LoginRequiredMixin, ListView):
 class Detalle_usuarios(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'Appfinal/usuario_detalle.html'
-
+    
 class Crear_usuario(LoginRequiredMixin, CreateView):
     model = User
     template_name = 'Appfinal/user_form.html'
@@ -191,3 +216,24 @@ class Eliminar_usuario(LoginRequiredMixin,  DeleteView):
      model = User
      template_name = 'Appfinal/user_confirm_delete.html'
      success_url = '/Appfinal/usuarios/'
+
+@login_required
+def agregarAvatar(request):
+
+    if request.method == "POST":
+        
+        mi_formulario = Avatarformulario(request.POST, request.FILES)
+        
+        if mi_formulario.is_valid():
+            data = mi_formulario.cleaned_data
+            u = User.objects.get(username=request.user)
+            
+            avatar = Avatar(user=u, imagen=data['imagen'])
+
+            avatar.save()
+            
+            return render(request, 'Appfinal/inicio_logueado.html')
+    
+    else:
+        mi_formulario = Avatarformulario()
+    return render(request, 'Appfinal/AgregarAvatar.html', {"mi_formulario":mi_formulario})
