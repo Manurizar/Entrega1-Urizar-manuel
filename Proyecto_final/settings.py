@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Appfinal',
+    'sendemail', 
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,15 @@ LOGIN_URL = '/Appfinal/login/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# EmailProject/settings.py
+
+# CONFIGURACION EMAIL
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # new
+DEFAULT_FROM_EMAIL = "ManuelUrizar1@outlook.com"
+EMAIL_HOST = "smtp.sendgrid.net"  # new
+EMAIL_HOST_USER = "apikey"  # new
+EMAIL_HOST_PASSWORD = "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"  # new
+EMAIL_PORT = 587  # new
+EMAIL_USE_TLS = True  # new

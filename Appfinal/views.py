@@ -17,15 +17,22 @@ clientes_lista = dir(Cliente)
 
 def inicio(request):
     if request.user.is_authenticated:
-        avatar = Avatar.objects.filter(user=request.user).first()
-        return render(request, 'Appfinal/inicio_logueado.html', {"url":avatar.imagen.url})
+        avatar = Avatar.objects.filter(user=request.user.id)
+        ab = -1
+        for a in avatar:
+            ab += 1
+        return render(request, 'Appfinal/inicio.html', {"url":avatar[ab].imagen.url})
     else:
-        return render(request, 'Appfinal/inicio_logueado.html')
+        return render(request, 'Appfinal/inicio.html')
 
 def local(request):
     
     
     return render(request, 'Appfinal/local.html')
+
+def paginas(request):
+
+    return render(request, 'Appfinal/paginas.html')
 
 #MOTORES BUSQUEDA
 
@@ -118,10 +125,6 @@ class Eliminar_cliente(LoginRequiredMixin,  DeleteView):
 
 #CRUD PRODUCTO
 
-class Lista_producto_no_logueado(ListView):
-    model = producto
-    template_name = 'Appfinal/producto_lista_no_logueado.html'
-
 class Lista_productos(ListView):
     model = producto
     template_name = 'Appfinal/producto_lista.html'
@@ -130,17 +133,17 @@ class Detalle_producto(DetailView):
     model = producto
     template_name = 'Appfinal/producto_detalle.html'
 
-class Crear_producto(CreateView):
+class Crear_producto(LoginRequiredMixin, CreateView):
     model = producto
     success_url = '/Appfinal/producto'
     fields = ['nombre_producto', 'precio', 'stock']
 
-class Modificar_producto(UpdateView):
+class Modificar_producto(LoginRequiredMixin, UpdateView):
     model = producto
     success_url = '/Appfinal/producto'
     fields = ['nombre_producto', 'precio', 'stock']
 
-class Eliminar_producto(DeleteView):
+class Eliminar_producto(LoginRequiredMixin, DeleteView):
     model = producto
     success_url = '/Appfinal/producto'
 
@@ -165,15 +168,15 @@ def login_request(request):
 
                 login(request, user)
 
-                return render(request, "Appfinal/inicio_logueado.html", {"mensaje":f"Bienvenido {usuario}"})
+                return render(request, "Appfinal/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
 
             else:
 
-                return render(request, "Appfinal/inicio_logueado.html", {"mensaje":"Datos incorrectos"})
+                return render(request, "Appfinal/inicio.html", {"mensaje":"Datos incorrectos"})
 
         else:
 
-            return render(request, "Appfinal/inicio_logueado.html", {"mensaje":"Error de formulario"})
+            return render(request, "Appfinal/inicio.html", {"mensaje":"Error de formulario"})
 
     form = AuthenticationForm()
     
@@ -185,7 +188,7 @@ def registro(request):
         if form.is_valid():
             username = form.cleaned_data["username"]
             form.save()
-            return render(request, "Appfinal/producto_lista.html", {"mensaje":"Usuario creado!"})
+            return render(request, "Appfinal/inicio.html", {"mensaje":"Usuario creado!"})
     else:
         form = UserRegisterForm()
     return render(request, 'Appfinal/registro.html', {'form':form})
@@ -198,6 +201,11 @@ class Lista_usuarios(LoginRequiredMixin, ListView):
 
 class Detalle_usuarios(LoginRequiredMixin, DetailView):
     model = User
+    def get_context_data(self, **kwargs):
+        avatar = Avatar.objects.filter(user=self.object.id).last()
+        context = super(Detalle_usuarios, self).get_context_data(**kwargs)
+        context = {"url":avatar.imagen.url}
+        return context
     template_name = 'Appfinal/usuario_detalle.html'
     
 class Crear_usuario(LoginRequiredMixin, CreateView):
@@ -225,14 +233,15 @@ def agregarAvatar(request):
         mi_formulario = Avatarformulario(request.POST, request.FILES)
         
         if mi_formulario.is_valid():
-            data = mi_formulario.cleaned_data
+            #data = mi_formulario.cleaned_data
+
             u = User.objects.get(username=request.user)
             
-            avatar = Avatar(user=u, imagen=data['imagen'])
+            avatar = Avatar(user=u, imagen=mi_formulario.cleaned_data['imagen'])
 
             avatar.save()
             
-            return render(request, 'Appfinal/inicio_logueado.html')
+            return render(request, 'Appfinal/inicio.html')
     
     else:
         mi_formulario = Avatarformulario()

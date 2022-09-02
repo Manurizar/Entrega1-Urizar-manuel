@@ -1,0 +1,21 @@
+{% extends "Appfinal/template_logueado.html" %}
+
+{% load static %}
+
+{% block B %}
+
+    <h1>Paginas disponibles</h1>
+
+    {% if request.user.is_authenticated %}
+                <a href="/Appfinal/cliente/">Clientes</a> <br>
+                <a href="/Appfinal/empleado/">Empleados</a> <br>
+                <a href="/Appfinal/local/">Local</a> <br>
+                <a href="/Appfinal/producto/">Productos</a> <br>
+    {% endif %}
+    {% if not request.user.is_authenticated %}
+    <a href="/Appfinal/local/">Local</a> <br>
+    <a href="/Appfinal/producto/">Productos</a> <br>
+    {% endif %}
+
+  
+{% endblock %}

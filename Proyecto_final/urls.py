@@ -15,14 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from Proyecto_final.views import dia, plantilla
+from Proyecto_final.views import dia, inicio
 from django.conf.urls.static import static
 from django.conf import settings
+from Appfinal import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Appfinal/', include('Appfinal.urls'))
-    
+    path('Appfinal/', include('Appfinal.urls')),
+    path('', views.inicio),
+    path('sendemail/', include('sendemail.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

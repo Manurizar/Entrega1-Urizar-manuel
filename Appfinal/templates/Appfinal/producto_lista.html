@@ -10,14 +10,18 @@
             ID: {{a.id}} <br>
             Nombre: {{a.nombre_producto}} <br>
             Fecha de creacion: {{a.fecha_de_creacion}} <br>
-        
+            {% if request.user.is_authenticated %}
             <a href="{% url 'productoEliminar' a.id %}">Borrar</a>
             <a href="{% url 'productoModificar' a.id %}">Modificar</a>
             <a href="{% url 'productoDetalle' a.id %}">Detalle</a>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+            <a href="{% url 'productoDetalle' a.id %}">Detalle</a>
+            {% endif %}
         </p>
     {% endfor %}
-    <p>
-        <a href ="/Appfinal/crear_producto/"> Agregar producto </a>
-    </p>
+    {% if request.user.is_authenticated %}
+    <a href ="/Appfinal/crear_producto/"> Agregar producto </a> <br>
     <a href ="/Appfinal/busqueda_producto/"> Buscar un producto </a>
+    {% endif %}
 {% endblock %}

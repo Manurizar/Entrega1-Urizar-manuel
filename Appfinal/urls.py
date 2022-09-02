@@ -7,6 +7,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('inicio/', views.inicio, name="inicio"),
+    path('paginas/', views.paginas, name="paginas"),
+    
 
 
     path('cliente/', views.Lista_clientes.as_view(), name="clienteInicio"),
@@ -25,7 +27,6 @@ urlpatterns = [
     path('busqueda_Empleado/', views.buscarEmpleado, name="busquedaEmpleado"),
     path('busqueda_Empleado_finalizada/', views.buscarEmpleadoResultado, name="busquedaEmpleado"),
 
-    path('productoInicio/', views.Lista_producto_no_logueado.as_view(), name="productos_no_logueado"), 
     path('producto/', views.Lista_productos.as_view(), name="productoInicio"),
     path('detalle_producto/<pk>', views.Detalle_producto.as_view(), name="productoDetalle"),
     path('crear_producto/', views.Crear_producto.as_view(), name="productoCrear"),
@@ -48,6 +49,7 @@ urlpatterns = [
     path('modificar_usuario/<pk>', views.Modificar_usuario.as_view(), name="usuarioModificar"),
     path('eliminar_usuario/<pk>', views.Eliminar_usuario.as_view(), name="usuarioEliminar"),
     path('agregaravatar/', views.agregarAvatar, name="agregarAvatar"),
+    path('perfil/<pk>', views.Detalle_usuarios.as_view(), name="perfil"),
 
 ]
 

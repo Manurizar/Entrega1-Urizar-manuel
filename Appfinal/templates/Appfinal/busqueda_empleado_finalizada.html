@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "Appfinal/template_logueado.html" %}
+
+{% load static %}
+
+{% block B %}
     <h1> 
         Tu busqueda devolvio estos resultados! <br>
         <br>
@@ -14,6 +10,5 @@
              <a href="/Appfinal/detalle_empleado/{{empleado.id}}">{{empleado.nombre_empleado}} </a>
          {% endfor %}     
     </h1>
-    <a href="{% url 'empleadoInicio'  %}">Inicio</a>
-</body>
-</html>
+    <a href="{% url 'empleadoInicio'  %}">Volver</a>
+{% endblock %}

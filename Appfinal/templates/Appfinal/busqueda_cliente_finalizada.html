@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1> 
-        Tu busqueda devolvio estos resultados! <br>
-        <br>
-         {% for cliente in nombre %}
-         <a href="/Appfinal/detalle_cliente/{{cliente.id}}">{{cliente.nombre_cliente}} </a>
-         {% endfor %}     
-    </h1>
-    <a href="{% url 'clienteInicio'  %}">Inicio</a>
-</body>
-</html>
+
+{% extends "Appfinal/template_logueado.html" %}
+
+{% load static %}
+
+{% block B %}
+<h1> 
+    Tu busqueda devolvio estos resultados! <br>
+    <br>
+     {% for cliente in nombre %}
+     <a href="/Appfinal/detalle_cliente/{{cliente.id}}">{{cliente.nombre_cliente}} </a>
+     {% endfor %}     
+</h1>
+
+<a href="{% url 'clienteInicio'  %}">Volver</a>
+{% endblock %}

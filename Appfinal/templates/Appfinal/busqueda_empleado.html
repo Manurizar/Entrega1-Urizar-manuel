@@ -1,3 +1,8 @@
+{% extends "Appfinal/template_logueado.html" %}
+
+{% load static %}
+
+{% block B %}
 <form action="/Appfinal/busqueda_Empleado_finalizada/" method="GET">
     <p>
         <input type="text" name="nombre" id="nombre">
@@ -9,4 +14,5 @@
     
 </form>
 
-<a href="{% url 'empleadoInicio'  %}">Inicio</a>
+<a href="{% url 'empleadoInicio'  %}">Volver</a>
+{% endblock %}

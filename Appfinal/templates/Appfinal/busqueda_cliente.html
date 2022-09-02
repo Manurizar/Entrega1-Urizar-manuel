@@ -1,3 +1,9 @@
+{% extends "Appfinal/template_logueado.html" %}
+
+{% load static %}
+
+{% block B %}
+
 
 
 <form action="/Appfinal/busqueda_cliente_finalizada/" method="GET">
@@ -11,4 +17,6 @@
     
 </form>
 
-<a href="{% url 'productoInicio'  %}">Inicio</a>
+<a href="{% url 'clienteInicio'  %}">Volver</a>
+
+{% endblock %}
