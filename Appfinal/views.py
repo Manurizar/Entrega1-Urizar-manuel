@@ -34,6 +34,10 @@ def paginas(request):
 
     return render(request, 'Appfinal/paginas.html')
 
+def about(request):
+    return render(request, 'Appfinal/Acerca.html')
+
+
 #MOTORES BUSQUEDA
 
 def buscarCliente(request):

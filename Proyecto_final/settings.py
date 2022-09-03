@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Appfinal',
     'sendemail', 
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,10 @@ EMAIL_HOST_USER = "apikey"  # new
 EMAIL_HOST_PASSWORD = "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"  # new
 EMAIL_PORT = 587  # new
 EMAIL_USE_TLS = True  # new
+
+ASGI_APPLICATION="Proyecto_final.routing.application"
+CHANNEL_LAYERS={
+    "default":{
+        "BACKEND":"channels.layers.InMemoryChannelLayer"
+    }
+}

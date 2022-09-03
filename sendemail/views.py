@@ -22,3 +22,9 @@ def contactView(request):
 
 def successView(request):
     return HttpResponse("Success! Thank you for your message.")
+
+def ShowChatHome(request):
+    return render(request, 'sendemail/chatHome.html')
+
+def ShowChatPage(request, room_name, person_name):
+    return render(request, 'sendemail/chatRoom.html', {'room_name':room_name, 'person_name':person_name})
