@@ -11,10 +11,14 @@
                 <a href="/Appfinal/empleado/">Empleados</a> <br>
                 <a href="/Appfinal/local/">Local</a> <br>
                 <a href="/Appfinal/producto/">Productos</a> <br>
+                <a href="/Appfinal/about/">Acerca de mi</a> <br>
+                <a href="/sendemail/">Salas de chat</a> <br>
     {% endif %}
     {% if not request.user.is_authenticated %}
     <a href="/Appfinal/local/">Local</a> <br>
     <a href="/Appfinal/producto/">Productos</a> <br>
+    <a href="/Appfinal/about/">Acerca de mi</a> <br>
+    <a href="/sendemail/">Salas de chat</a> <br>
     {% endif %}
 
   

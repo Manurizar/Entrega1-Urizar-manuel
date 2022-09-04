@@ -17,11 +17,11 @@ clientes_lista = dir(Cliente)
 
 def inicio(request):
     if request.user.is_authenticated:
-        avatar = Avatar.objects.filter(user=request.user.id)
-        ab = -1
-        for a in avatar:
-            ab += 1
-        return render(request, 'Appfinal/inicio.html', {"url":avatar[ab].imagen.url})
+        try:
+            avatar = Avatar.objects.filter(user=request.user.id).last()
+            return render(request, 'Appfinal/inicio.html', {"url":avatar.imagen.url})
+        except:
+            return render(request, 'Appfinal/inicio.html')
     else:
         return render(request, 'Appfinal/inicio.html')
 
@@ -206,10 +206,13 @@ class Lista_usuarios(LoginRequiredMixin, ListView):
 class Detalle_usuarios(LoginRequiredMixin, DetailView):
     model = User
     def get_context_data(self, **kwargs):
-        avatar = Avatar.objects.filter(user=self.object.id).last()
-        context = super(Detalle_usuarios, self).get_context_data(**kwargs)
-        context = {"url":avatar.imagen.url}
-        return context
+        try:
+            avatar = Avatar.objects.filter(user=self.object.id).last()
+            context = super(Detalle_usuarios, self).get_context_data(**kwargs)
+            context = {"url":avatar.imagen.url}
+            return context
+        except:
+            pass
     template_name = 'Appfinal/usuario_detalle.html'
     
 class Crear_usuario(LoginRequiredMixin, CreateView):

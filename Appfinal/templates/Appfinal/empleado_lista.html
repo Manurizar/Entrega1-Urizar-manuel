@@ -7,7 +7,7 @@
     <h1> Empleados </h1>
     {% for a in object_list %}
         <p>
-            Puesto numero: {{a.id}} <br>
+            Numero de legajo: CC{{a.id}} <br>
             Nombre: {{a.nombre_empleado}} <br> 
             <a href="{% url 'empleadoEliminar' a.id %}">Borrar</a>
             <a href="{% url 'empleadoModificar' a.id %}">Modificar</a>
